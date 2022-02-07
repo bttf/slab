@@ -1,0 +1,44 @@
+version: '3'
+services:
+  frontend:
+    build: frontend
+    command: yarn dev -p 8080
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env.local
+  backend:
+    build: backend
+    command: yarn dev
+    ports:
+      - '3000:3000'
+      - '9229:9229'
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    environment:
+      PORT: 3000
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: some-db
+      PGPORT: 5432
+      AUTH_SECRET: "m0n4l!s4"
+      GOOGLE_CLIENT_ID: "$GOOGLE_CLIENT_ID"
+      GOOGLE_CLIENT_SECRET: "$GOOGLE_CLIENT_SECRET"
+      GOOGLE_CALLBACK_URL: "http://localhost:8080/google"
+  db:
+    image: postgres:12.5-alpine
+    environment:
+      POSTGRES_DB: some-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '15432:5432'
