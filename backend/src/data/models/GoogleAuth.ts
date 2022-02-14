@@ -9,7 +9,6 @@ import type User from "./User";
 
 class GoogleAuth extends Model {
   public uuid!: string;
-  public email!: string;
   public accessToken!: string;
   public refreshToken!: string;
   public createdAt!: Date;
@@ -34,17 +33,15 @@ GoogleAuth.initialize = (sequelize) => {
       uuid: {
         type: DataTypes.UUIDV4,
       },
-      email: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
       accessToken: {
         type: DataTypes.TEXT,
         allowNull: false,
+        field: "access_token",
       },
       refreshToken: {
         type: DataTypes.TEXT,
         allowNull: false,
+        field: "refresh_token",
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -54,6 +51,10 @@ GoogleAuth.initialize = (sequelize) => {
       },
       deletedAt: {
         type: DataTypes.DATE,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        field: "user_id",
       },
     },
     {
