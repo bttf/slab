@@ -4,9 +4,9 @@ Hardened boilerplate for a scalable full-stack TypeScript web application.
 
 `docker-compose up`
 
-## TODO
+# TODO
 
 - [ ] sequelize
 - [ ] migrations
 - [ ] graphql
-- [ ] google oauth flow
+- [ ] auth via google

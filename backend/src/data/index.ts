@@ -2,15 +2,8 @@ import fs from "fs";
 import path from "path";
 import { Model, ModelDefined, ModelStatic, Sequelize } from "sequelize";
 
-const {
-  NODE_ENV,
-  PGHOST,
-  PGUSER,
-  PGPASSWORD,
-  PGDATABASE,
-  PGPORT,
-  PGCERT,
-} = process.env;
+const { NODE_ENV, PGHOST, PGUSER, PGPASSWORD, PGDATABASE, PGPORT, PGCERT } =
+  process.env;
 
 if (!PGDATABASE || !PGUSER || !PGPORT) {
   throw new Error(
@@ -32,13 +25,13 @@ const sequelize = new Sequelize(PGDATABASE, PGUSER, PGPASSWORD, {
       : undefined,
 });
 
-class ExtendedModel extends Model {
-  static initialize: (sequelize: Sequelize) => void;
-  static associate: (sequelize: Sequelize) => void;
-}
-
-const db: { [modalName: string]: ModelStatic<ExtendedModel> } = {};
+const db: { [modalName: string]: ExtendedModel } = {};
 const modelsPath = path.join(__dirname, "models");
+
+interface ExtendedModel extends ModelStatic<any> {
+  initialize: (sequelize: Sequelize) => void;
+  associate: (sequelize: Sequelize) => void;
+}
 
 const init = async () => {
   await Promise.all(
@@ -46,7 +39,7 @@ const init = async () => {
       .readdirSync(modelsPath)
       .filter((filename) => filename.indexOf(".") !== 0)
       .map(async (filename) => {
-        const model: ModelStatic<ExtendedModel> = await import(
+        const model: ExtendedModel = await import(
           path.join(modelsPath, filename)
         );
         db[model.name] = model;
@@ -55,10 +48,19 @@ const init = async () => {
 
   Object.keys(db).forEach((modelName) => {
     const model = db[modelName];
-    // TODO Figure this out
     if (typeof model.initialize === "function") {
+      model.initialize(sequelize);
     }
-    if (typeof model.associations === "function") {
+  });
+
+  Object.keys(db).forEach((modelName) => {
+    const model = db[modelName];
+    if (typeof model.associate === "function") {
+      model.associate(sequelize);
     }
   });
 };
+
+init();
+
+export default sequelize;
