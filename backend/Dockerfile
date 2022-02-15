@@ -2,7 +2,7 @@ FROM node:14-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache make gcc g++ python3 postgresql-dev
+RUN apk add --no-cache make cmake gcc g++ python3 postgresql-dev
 
 ADD package.json /app/package.json
 

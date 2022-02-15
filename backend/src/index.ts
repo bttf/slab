@@ -1,14 +1,25 @@
 import express, { Request, Response } from "express";
+import http from "http";
+import { genApolloServer } from "./graphql";
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 
-// hello
+async function start() {
+  const app = express();
+  const httpServer = http.createServer(app);
+  const apolloServer = genApolloServer(httpServer);
 
-app.get("/", (_req: Request, res: Response) => {
-  res.send("Hello! what goin in hello ok\n");
-});
+  await apolloServer.start();
 
-app.listen(PORT, () => {
-  console.log("Listening on port %s", PORT);
-});
+  apolloServer.applyMiddleware({ app });
+
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: PORT }, resolve)
+  );
+
+  console.log(
+    `🚀 Server ready at http://localhost:4000${apolloServer.graphqlPath}`
+  );
+}
+
+start();

@@ -3,15 +3,18 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --poll src",
+    "dev": "yarn migrate && ts-node-dev --poll src",
     "create:migration": "db-migrate create --config migrations/config/database.json",
     "migrate": "db-migrate up --config migrations/config/database.json",
     "migrate:down": "db-migrate down -c 1 --config migrations/config/database.json"
   },
   "dependencies": {
+    "apollo-server-core": "^3.6.3",
+    "apollo-server-express": "^3.6.3",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "express": "^4.17.2",
+    "graphql": "^16.3.0",
     "sequelize": "^6.15.1"
   },
   "devDependencies": {
