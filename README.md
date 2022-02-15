@@ -6,7 +6,7 @@ Hardened boilerplate for a scalable full-stack TypeScript web application.
 
 # TODO
 
-- [ ] sequelize
-- [ ] migrations
-- [ ] graphql
+- [x] sequelize
+- [x] migrations
+- [x] graphql
 - [ ] auth via google
