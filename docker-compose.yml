@@ -32,8 +32,8 @@ services:
       PGDATABASE: some-db
       PGPORT: 5432
       AUTH_SECRET: "m0n4l!s4"
-      GOOGLE_CLIENT_ID: "$GOOGLE_CLIENT_ID"
-      GOOGLE_CLIENT_SECRET: "$GOOGLE_CLIENT_SECRET"
+      GOOGLE_CLIENT_ID: "$SLAB_GOOGLE_CLIENT_ID"
+      GOOGLE_CLIENT_SECRET: "$SLAB_GOOGLE_CLIENT_SECRET"
       GOOGLE_CALLBACK_URL: "http://localhost:8080/google"
   db:
     image: postgres:12.5-alpine

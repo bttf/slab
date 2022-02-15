@@ -1,5 +1,7 @@
+import googleAuthUrl from "./googleAuthUrl";
+
 export default {
   Query: {
-    bye: () => "goodebye",
+    googleAuthUrl,
   },
 };
