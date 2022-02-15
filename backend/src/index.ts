@@ -1,24 +1,32 @@
 import express, { Request, Response } from "express";
 import http from "http";
-import { genApolloServer } from "./graphql";
+import { genApolloServer as genPrivateGqlServer } from "./graphql/privateServer";
+import { genApolloServer as genPublicServer } from "./graphql/publicServer";
 
 const PORT = process.env.PORT || 3000;
 
 async function start() {
   const app = express();
   const httpServer = http.createServer(app);
-  const apolloServer = genApolloServer(httpServer);
+  const privateGqlServer = genPrivateGqlServer(httpServer);
+  const publicGqlServer = genPublicServer(httpServer);
 
-  await apolloServer.start();
+  await privateGqlServer.start();
+  await publicGqlServer.start();
 
-  apolloServer.applyMiddleware({ app });
+  privateGqlServer.applyMiddleware({ app, path: "/graphql" });
+  publicGqlServer.applyMiddleware({ app, path: "/public/graphql" });
 
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: PORT }, resolve)
   );
 
   console.log(
-    `🚀 Server ready at http://localhost:4000${apolloServer.graphqlPath}`
+    `🚀 Server ready at http://localhost:${PORT}${publicGqlServer.graphqlPath}`
+  );
+
+  console.log(
+    `🚀 Server ready at http://localhost:${PORT}${privateGqlServer.graphqlPath}`
   );
 }
 
