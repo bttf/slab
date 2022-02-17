@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3000;
 async function start() {
   const app = express();
   const httpServer = http.createServer(app);
-  const privateGqlServer = genPrivateGqlServer(httpServer);
-  const publicGqlServer = genPublicServer(httpServer);
+  const privateGqlServer = await genPrivateGqlServer(httpServer);
+  const publicGqlServer = await genPublicServer(httpServer);
 
   await privateGqlServer.start();
   await publicGqlServer.start();

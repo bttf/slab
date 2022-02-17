@@ -8,6 +8,7 @@ import {
 import type GoogleAuth from "./GoogleAuth";
 
 class User extends Model {
+  public id!: number;
   public uuid!: string;
   public email!: string;
   public createdAt!: Date;

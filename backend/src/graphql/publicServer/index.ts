@@ -1,15 +1,20 @@
 import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
-import { Server } from "http";
+import type { Server } from "http";
+import genGoogleOAuthClient from "../../lib/genGoogleOAuthClient";
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";
 
-const genContext = () => ({});
+const genContext = async () => ({
+  googleOAuthClient: await genGoogleOAuthClient(),
+});
 
-export const genApolloServer = (httpServer: Server) =>
+export type PublicServerContext = Awaited<ReturnType<typeof genContext>>;
+
+export const genApolloServer = async (httpServer: Server) =>
   new ApolloServer({
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: genContext(),
+    context: await genContext(),
   });
