@@ -1,6 +1,6 @@
 import { google } from "googleapis";
-import type User from "../data/models/User";
-import GoogleAuth from "../data/models/GoogleAuth";
+import type User from "src/data/models/User";
+import GoogleAuth from "src/data/models/GoogleAuth";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;

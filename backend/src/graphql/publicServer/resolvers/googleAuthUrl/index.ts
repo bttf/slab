@@ -1,5 +1,5 @@
 import type { GraphQLFieldResolver } from "graphql";
-import type { PublicServerContext } from "..";
+import type { PublicServerContext } from "../..";
 
 const googleAuthUrl: GraphQLFieldResolver<null, PublicServerContext> = async (
   _source,

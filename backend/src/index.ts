@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import http from "http";
 import { genApolloServer as genPrivateGqlServer } from "./graphql/privateServer";
 import { genApolloServer as genPublicServer } from "./graphql/publicServer";

@@ -1,5 +1,5 @@
 import googleAuthUrl from "./googleAuthUrl";
-import authWithGoogle from "./mutations/authWithGoogle";
+import authWithGoogle from "./_mutations/authWithGoogle";
 
 export default {
   Mutation: {
