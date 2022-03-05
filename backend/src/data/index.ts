@@ -2,8 +2,15 @@ import fs from "fs";
 import path from "path";
 import { Model, ModelDefined, ModelStatic, Sequelize } from "sequelize";
 
-const { NODE_ENV, PGHOST, PGUSER, PGPASSWORD, PGDATABASE, PGPORT, PGCERT } =
-  process.env;
+const {
+  NODE_ENV,
+  PGHOST,
+  PGUSER,
+  PGPASSWORD,
+  PGDATABASE,
+  PGPORT,
+  PGCERT,
+} = process.env;
 
 if (!PGDATABASE || !PGUSER || !PGPORT) {
   throw new Error(
@@ -25,7 +32,7 @@ const sequelize = new Sequelize(PGDATABASE, PGUSER, PGPASSWORD, {
       : undefined,
 });
 
-const db: { [modalName: string]: ExtendedModel } = {};
+const db: { [key: string]: ExtendedModel | Sequelize } = {};
 const modelsPath = path.join(__dirname, "models");
 
 interface ExtendedModel extends ModelStatic<any> {
@@ -48,19 +55,27 @@ const init = async () => {
 
   Object.keys(db).forEach((modelName) => {
     const model = db[modelName];
-    if (typeof model.initialize === "function") {
+    if (
+      !(model instanceof Sequelize) &&
+      typeof model.initialize === "function"
+    ) {
       model.initialize(sequelize);
     }
   });
 
   Object.keys(db).forEach((modelName) => {
     const model = db[modelName];
-    if (typeof model.associate === "function") {
+    if (
+      !(model instanceof Sequelize) &&
+      typeof model.associate === "function"
+    ) {
       model.associate(sequelize);
     }
   });
+
+  db.sequelize = sequelize;
 };
 
 init();
 
-export default sequelize;
+export default db;
