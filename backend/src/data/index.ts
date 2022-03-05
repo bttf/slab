@@ -1,6 +1,7 @@
 import User from "./models/User";
 import GoogleAuth from "./models/GoogleAuth";
-import initDb, { sequelize } from "./initDb";
+import initDb from "./initDb";
+import sequelize from "./sequelize";
 
 initDb();
 

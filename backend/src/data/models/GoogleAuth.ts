@@ -1,10 +1,10 @@
-import {
+import sequelize, {
   Association,
   BelongsToGetAssociationMixin,
   DataTypes,
   Model,
   Sequelize,
-} from "sequelize";
+} from "../sequelize";
 import type User from "./User";
 
 class GoogleAuth extends Model {
@@ -27,44 +27,44 @@ class GoogleAuth extends Model {
   static associate: (sequelize: Sequelize) => void;
 }
 
-GoogleAuth.initialize = (sequelize) => {
-  GoogleAuth.init(
-    {
-      uuid: {
-        type: DataTypes.UUIDV4,
-      },
-      accessToken: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        field: "access_token",
-      },
-      refreshToken: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        field: "refresh_token",
-      },
-      createdAt: {
-        type: DataTypes.DATE,
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-      },
-      deletedAt: {
-        type: DataTypes.DATE,
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        field: "user_id",
-      },
+GoogleAuth.init(
+  {
+    uuid: {
+      type: DataTypes.UUIDV4,
     },
-    {
-      schema: "v1",
-      tableName: "google_auths",
-      modelName: "GoogleAuth",
-      sequelize,
-    }
-  );
-};
+    accessToken: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      field: "access_token",
+    },
+    refreshToken: {
+      type: DataTypes.TEXT,
+      field: "refresh_token",
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at",
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: "updated_at",
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: "deleted_at",
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      field: "user_id",
+    },
+  },
+  {
+    schema: "v1",
+    tableName: "google_auths",
+    modelName: "GoogleAuth",
+    sequelize,
+  }
+);
 
 GoogleAuth.associate = (sequelize) => {
   const { User } = sequelize.models;

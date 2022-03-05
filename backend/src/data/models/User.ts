@@ -1,10 +1,10 @@
-import {
+import sequelize, {
   Association,
   DataTypes,
   HasOneGetAssociationMixin,
   Model,
   Sequelize,
-} from "sequelize";
+} from "../sequelize";
 import type GoogleAuth from "./GoogleAuth";
 
 class User extends Model {
@@ -25,25 +25,35 @@ class User extends Model {
   static associate: (sequelize: Sequelize) => void;
 }
 
-User.initialize = (sequelize) => {
-  User.init(
-    {
-      uuid: {
-        type: DataTypes.UUIDV4,
-      },
-      email: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
+User.init(
+  {
+    uuid: {
+      type: DataTypes.UUIDV4,
     },
-    {
-      schema: "v1",
-      tableName: "users",
-      modelName: "User",
-      sequelize,
-    }
-  );
-};
+    email: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at",
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: "updated_at",
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: "deleted_at",
+    },
+  },
+  {
+    schema: "v1",
+    tableName: "users",
+    modelName: "User",
+    sequelize,
+  }
+);
 
 User.associate = (sequelize) => {
   const { GoogleAuth } = sequelize.models;
