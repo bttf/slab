@@ -20,10 +20,18 @@ const GoogleAuth: NextPage = () => {
 
   useEffect(() => {
     if (!authWithGoogle || !code) return;
-    console.log("code", code);
     authWithGoogle({
       variables: { code },
-    });
+    })
+      .catch((ee) => {
+        // TODO Handle error case; reroute to front page
+        console.log("error", ee);
+      })
+      .then(({ data }) => {
+        // TODO Generate types for gql queries/mutations
+        // TODO Store token in local storage and reroute to authenticated index page
+        console.log("token", data.authWithGoogle);
+      });
   }, [authWithGoogle, code]);
 
   return (
