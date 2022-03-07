@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { gql, useMutation, publicClient } from "../graphql";
+import { gql, useMutation, publicClient } from "lib/graphql";
+import { storeAccessToken } from "lib/storage";
 import {
   AuthWithGoogleMutation,
   AuthWithGoogleMutationVariables,
@@ -27,7 +28,8 @@ const GoogleAuth: NextPage = () => {
   });
 
   useEffect(() => {
-    if (!authWithGoogle || !code) return;
+    if (!authWithGoogle || !code || !router) return;
+
     const fetchToken = async () => {
       try {
         const resp = await authWithGoogle({
@@ -36,16 +38,23 @@ const GoogleAuth: NextPage = () => {
 
         const token = resp.data?.authWithGoogle;
 
-        // TODO store token
-        // re-route to index
+        if (!token) throw new Error("null token");
+
+        storeAccessToken(token);
+
+        router.push("/dashboard");
       } catch (e) {
-        // TODO communicate error
-        // re-route to login page
+        console.error("An error occurred", e);
+        router.push(
+          `/?error=${window.encodeURIComponent(
+            "There was an error authenticating the user"
+          )}`
+        );
       }
     };
 
     fetchToken();
-  }, [authWithGoogle, code]);
+  }, [router, authWithGoogle, code]);
 
   return (
     <div>

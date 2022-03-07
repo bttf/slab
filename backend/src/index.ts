@@ -14,8 +14,11 @@ async function start() {
   await privateGqlServer.start();
   await publicGqlServer.start();
 
-  privateGqlServer.applyMiddleware({ app, path: "/graphql" });
   publicGqlServer.applyMiddleware({ app, path: "/public/graphql" });
+
+  // TODO Add passport
+
+  privateGqlServer.applyMiddleware({ app, path: "/graphql" });
 
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: PORT }, resolve)
