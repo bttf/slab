@@ -2,9 +2,10 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { publicClient, gql } from "../graphql";
 import styles from "../styles/Home.module.css";
+import { GoogleAuthUrlQuery } from "./__generated__/index.types";
 
 export async function getServerSideProps() {
-  const resp = await publicClient.query({
+  const resp = await publicClient.query<GoogleAuthUrlQuery>({
     query: gql`
       query GoogleAuthUrl {
         googleAuthUrl
@@ -14,7 +15,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      googleAuthUrl: resp?.data?.googleAuthUrl,
+      googleAuthUrl: resp.data.googleAuthUrl,
     },
   };
 }

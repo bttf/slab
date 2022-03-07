@@ -2,6 +2,10 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { gql, useMutation, publicClient } from "../graphql";
+import {
+  AuthWithGoogleMutation,
+  AuthWithGoogleMutationVariables,
+} from "./__generated__/google.types";
 
 const AUTH_WITH_GOOGLE = gql`
   mutation AuthWithGoogle($code: String!) {
@@ -14,24 +18,33 @@ const GoogleAuth: NextPage = () => {
   const {
     query: { code },
   } = router;
-  const [authWithGoogle] = useMutation(AUTH_WITH_GOOGLE, {
+
+  const [authWithGoogle] = useMutation<
+    AuthWithGoogleMutation,
+    AuthWithGoogleMutationVariables
+  >(AUTH_WITH_GOOGLE, {
     client: publicClient,
   });
 
   useEffect(() => {
     if (!authWithGoogle || !code) return;
-    authWithGoogle({
-      variables: { code },
-    })
-      .catch((ee) => {
-        // TODO Handle error case; reroute to front page
-        console.log("error", ee);
-      })
-      .then(({ data }) => {
-        // TODO Generate types for gql queries/mutations
-        // TODO Store token in local storage and reroute to authenticated index page
-        console.log("token", data.authWithGoogle);
-      });
+    const fetchToken = async () => {
+      try {
+        const resp = await authWithGoogle({
+          variables: { code: code.toString() },
+        });
+
+        const token = resp.data?.authWithGoogle;
+
+        // TODO store token
+        // re-route to index
+      } catch (e) {
+        // TODO communicate error
+        // re-route to login page
+      }
+    };
+
+    fetchToken();
   }, [authWithGoogle, code]);
 
   return (

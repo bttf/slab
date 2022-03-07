@@ -1,0 +1,16 @@
+schema:
+  - http://backend:3000/graphql
+  - http://backend:3000/public/graphql
+documents: "./**/!(*.generated).{ts,tsx}"
+generates:
+  ./types.ts:
+    - typescript
+  ./:
+    preset: near-operation-file
+    presetConfig:
+      extension: .types.ts
+      baseTypesPath: types.ts
+      folder: __generated__
+    plugins:
+      - typescript-operations
+      - typescript-react-query
