@@ -22,10 +22,9 @@ export async function getServerSideProps() {
 }
 
 const Home: NextPage<{ googleAuthUrl: string }> = ({ googleAuthUrl }) => {
-  const router = useRouter();
   const {
     query: { error },
-  } = router;
+  } = useRouter();
 
   return (
     <div className={styles.container}>
