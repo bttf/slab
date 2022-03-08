@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { publicClient, gql } from "lib/graphql";
-import styles from "../styles/Home.module.css";
 import { GoogleAuthUrlQuery } from "./__generated__/index.types";
 
 export async function getServerSideProps() {
@@ -27,7 +26,7 @@ const Home: NextPage<{ googleAuthUrl: string }> = ({ googleAuthUrl }) => {
   } = useRouter();
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>cool title goes here</title>
         <meta
@@ -37,9 +36,9 @@ const Home: NextPage<{ googleAuthUrl: string }> = ({ googleAuthUrl }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         {error && <div>{error}</div>}
-        <h1 className={styles.title}>
+        <h1>
           <a href={googleAuthUrl}>Log into Google</a>
         </h1>
       </main>

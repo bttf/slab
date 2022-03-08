@@ -38,7 +38,6 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  // TODO Catch 401s here and re-route to index
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) =>
       console.log(
@@ -47,7 +46,15 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     );
   }
 
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`);
+
+    // @ts-expect-error apollo needs to fix this? seems statusCode is missing
+    // from type definition
+    if (networkError.statusCode === 401) {
+      window.location.href = "/";
+    }
+  }
 });
 
 export const client = new ApolloClient({

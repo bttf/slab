@@ -16,7 +16,12 @@ const Dashboard: NextPage<any> = () => {
   return (
     <div>
       {loading && <h1>Loading...</h1>}
-      {data && <h1>Your email: {data.viewer?.email}</h1>}
+      {data && (
+        <>
+          <h1>uuid: {data.viewer?.uuid}</h1>
+          <h1>email: {data.viewer?.email}</h1>
+        </>
+      )}
     </div>
   );
 };
