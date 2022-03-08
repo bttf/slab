@@ -7,3 +7,6 @@ export const storeAccessToken = (token: string) =>
 
 export const getAccessToken = () =>
   window.localStorage.getItem(ACCESS_TOKEN_KEY);
+
+export const clearAccessToken = () =>
+  window.localStorage.removeItem(ACCESS_TOKEN_KEY);

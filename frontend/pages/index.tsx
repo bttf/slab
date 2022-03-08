@@ -36,11 +36,11 @@ const Home: NextPage<{ googleAuthUrl: string }> = ({ googleAuthUrl }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="p-2">
         {error && <div>{error}</div>}
-        <h1>
-          <a href={googleAuthUrl}>Log into Google</a>
-        </h1>
+        <a className="bg-slate-100 p-2 border" href={googleAuthUrl}>
+          Log into Google
+        </a>
       </main>
     </div>
   );
