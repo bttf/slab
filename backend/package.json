@@ -17,6 +17,7 @@
     "express": "^4.17.2",
     "googleapis": "^95.0.0",
     "graphql": "^16.3.0",
+    "graphql-scalars": "^1.15.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.5.2",
     "passport-http-bearer": "^1.0.1",

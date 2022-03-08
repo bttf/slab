@@ -1,8 +1,17 @@
+import { typeDefs as scalarTypeDefs } from "graphql-scalars";
 import { gql } from "apollo-server-express";
 
-export default gql`
+const typeDefs = gql`
+  type User {
+    uuid: UUID!
+    email: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+  }
+
   type Query {
-    "test"
-    hello: String
+    viewer: User
   }
 `;
+
+export default [...scalarTypeDefs, typeDefs];

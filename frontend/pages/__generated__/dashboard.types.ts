@@ -21,27 +21,30 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     return json.data;
   }
 }
-export type TestQueryQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type DashboardQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TestQueryQuery = { __typename?: 'Query', hello?: string | null };
+export type DashboardQuery = { __typename?: 'Query', viewer?: { __typename?: 'User', uuid: any, email: string } | null };
 
 
-export const TestQueryDocument = `
-    query TestQuery {
-  hello
+export const DashboardDocument = `
+    query Dashboard {
+  viewer {
+    uuid
+    email
+  }
 }
     `;
-export const useTestQueryQuery = <
-      TData = TestQueryQuery,
+export const useDashboardQuery = <
+      TData = DashboardQuery,
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryQueryVariables,
-      options?: UseQueryOptions<TestQueryQuery, TError, TData>
+      variables?: DashboardQueryVariables,
+      options?: UseQueryOptions<DashboardQuery, TError, TData>
     ) =>
-    useQuery<TestQueryQuery, TError, TData>(
-      variables === undefined ? ['TestQuery'] : ['TestQuery', variables],
-      fetcher<TestQueryQuery, TestQueryQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestQueryDocument, variables),
+    useQuery<DashboardQuery, TError, TData>(
+      variables === undefined ? ['Dashboard'] : ['Dashboard', variables],
+      fetcher<DashboardQuery, DashboardQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, DashboardDocument, variables),
       options
     );

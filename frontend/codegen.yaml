@@ -1,5 +1,7 @@
 schema:
-  - http://backend:3000/graphql
+  - http://backend:3000/graphql:
+      headers:
+        Authorization: Bearer gen-types-token
   - http://backend:3000/public/graphql
 documents: "./**/!(*.generated).{ts,tsx}"
 generates:

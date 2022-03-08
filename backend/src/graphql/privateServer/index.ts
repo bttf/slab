@@ -1,12 +1,24 @@
 import { ApolloServer } from "apollo-server-express";
-import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import {
+  ApolloServerPluginDrainHttpServer,
+  ContextFunction,
+} from "apollo-server-core";
 import { Server } from "http";
+import db from "src/data";
+import type User from "src/data/models/User";
 import genGoogleOAuthClient from "../../lib/genGoogleOAuthClient";
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";
 
-const genContext = async () => ({
+export type Context = {
+  googleOAuthClient: Awaited<ReturnType<typeof genGoogleOAuthClient>>;
+  user: User | null;
+};
+
+// TODO provide express request type
+const genContext: ContextFunction<any, Promise<Context>> = async ({ req }) => ({
   googleOAuthClient: await genGoogleOAuthClient(),
+  user: await db.User.findOne({ where: { email: req.user.email } }),
 });
 
 export const genApolloServer = async (httpServer: Server) =>
@@ -14,5 +26,5 @@ export const genApolloServer = async (httpServer: Server) =>
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: await genContext(),
+    context: genContext,
   });

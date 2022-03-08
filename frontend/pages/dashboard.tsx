@@ -1,19 +1,22 @@
 import type { NextPage } from "next";
 import { gql, useQuery } from "@apollo/client";
-import { TestQueryQuery } from "./__generated__/dashboard.types";
+import { DashboardQuery } from "./__generated__/dashboard.types";
 
-const TEST_QUERY = gql`
-  query TestQuery {
-    hello
+const DASHBOARD_QUERY = gql`
+  query Dashboard {
+    viewer {
+      uuid
+      email
+    }
   }
 `;
 
 const Dashboard: NextPage<any> = () => {
-  const { data } = useQuery<TestQueryQuery>(TEST_QUERY);
+  const { data, loading } = useQuery<DashboardQuery>(DASHBOARD_QUERY);
   return (
     <div>
-      Welcome brethren
-      {data && <div>data: {data?.hello}</div>}
+      {loading && <h1>Loading...</h1>}
+      {data && <h1>Your email: {data.viewer?.email}</h1>}
     </div>
   );
 };
