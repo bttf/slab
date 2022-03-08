@@ -9,4 +9,4 @@ Hardened boilerplate for a scalable full-stack TypeScript web application.
 - [x] sequelize
 - [x] migrations
 - [x] graphql
-- [ ] auth via google
+- [x] auth via google
