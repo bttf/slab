@@ -1,8 +1,7 @@
-import { google } from "googleapis";
 import type { GraphQLFieldResolver } from "graphql";
 import jwt from "jsonwebtoken";
 import db from "src/data";
-import { PublicServerContext } from "../../..";
+import { PublicServerContext } from "src/graphql/publicServer";
 
 type GoogleIDToken = {
   iss: string;
