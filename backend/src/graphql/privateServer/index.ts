@@ -18,7 +18,7 @@ export type Context = {
 // TODO provide express request type
 const genContext: ContextFunction<any, Promise<Context>> = async ({ req }) => ({
   googleOAuthClient: await genGoogleOAuthClient(),
-  user: await db.User.findOne({ where: { email: req.user.email } }),
+  user: await db.User.findOne({ where: { email: req.user.email ?? "" } }),
 });
 
 export const genApolloServer = async (httpServer: Server) =>

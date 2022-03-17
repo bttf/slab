@@ -6,7 +6,8 @@
     "dev": "yarn migrate && ts-node-dev -r tsconfig-paths/register --poll src/index.ts",
     "create:migration": "db-migrate create --config migrations/config/database.json",
     "migrate": "db-migrate up --config migrations/config/database.json",
-    "migrate:down": "db-migrate down -c 1 --config migrations/config/database.json"
+    "migrate:down": "db-migrate down -c 1 --config migrations/config/database.json",
+    "gen-types": "graphql-codegen"
   },
   "dependencies": {
     "apollo-server-core": "^3.6.3",
@@ -25,6 +26,9 @@
     "tsconfig-paths": "^3.13.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-resolvers": "^2.6.1",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^17.0.15",
