@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-api
+  labels:
+    app: node-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-api
+  template:
+    metadata:
+      labels:
+        app: node-api
+    spec:
+      containers:
+        - name: node-api
+          image: <docker-hub-namespace>/<docker-hub-img>:<tag>
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: 3000
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: PGHOST
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: PGUSER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: PGPASSWORD
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: PGDATABASE
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: PGPORT
+            - name: AUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: AUTH_SECRET
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: GOOGLE_CLIENT_ID
+            - name: GOOGLE_CALLBACK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: GOOGLE_CALLBACK_URL
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: node-api-secrets
+                  key: GOOGLE_CLIENT_SECRET

@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: slab-ingress
+spec:
+  rules:
+    - host: your-hostname-here
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: node-api-service
+                port:
+                  number: 80

@@ -4,7 +4,7 @@ kubernetes configuration
 
 # TODO
 
-- [ ] secrets
-- [ ] deployment
-- [ ] service
-- [ ] ingress
+- [x] secrets
+- [x] deployment
+- [x] service
+- [x] ingress
