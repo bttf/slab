@@ -1,25 +1,25 @@
 version: '3'
 services:
-  next-app:
-    build: next-app
+  frontend:
+    build: frontend
     command: yarn dev -p 8080
     ports:
       - '8080:8080'
     volumes:
-      - ./next-app:/app
+      - ./frontend:/app
       - /app/node_modules
     depends_on:
-      - node-api
+      - api
     env_file:
-      - ./next-app/.env.local
-  node-api:
-    build: node-api
+      - ./frontend/.env.local
+  api:
+    build: api
     command: yarn dev
     ports:
       - '3000:3000'
       - '9229:9229'
     volumes:
-      - ./node-api:/app
+      - ./api:/app
       - /app/node_modules
     depends_on:
       - db

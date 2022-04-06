@@ -11,6 +11,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: node-api-service
+                name: api-service
                 port:
                   number: 80
