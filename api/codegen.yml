@@ -1,0 +1,12 @@
+schema:
+  - http://api:3000/graphql:
+      headers:
+        Authorization: Bearer gen-types-token
+  - http://api:3000/public/graphql
+generates:
+  ./gql-types.ts:
+    config:
+      useIndexSignature: true
+    plugins:
+      - typescript
+      - typescript-resolvers
