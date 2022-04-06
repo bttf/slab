@@ -6,7 +6,7 @@ import { storeAccessToken } from "@/lib/storage";
 import {
   AuthWithGoogleMutation,
   AuthWithGoogleMutationVariables,
-} from "./__generated__/google.types";
+} from "@/types";
 
 const AUTH_WITH_GOOGLE = gql`
   mutation AuthWithGoogle($code: String!) {

@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { gql, useQuery } from "@apollo/client";
 import logOut from "@/lib/logOut";
-import { DashboardQuery } from "./__generated__/dashboard.types";
+import { DashboardQuery } from "@/types";
 
 const DASHBOARD_QUERY = gql`
   query Dashboard {

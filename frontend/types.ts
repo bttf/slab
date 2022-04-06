@@ -146,6 +146,8 @@ export type Scalars = {
   SafeInt: any;
   /** A time string at UTC, such as 10:15:30Z, compliant with the `full-time` format outlined in section 5.6 of the RFC 3339profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Time: any;
+  /** A field whose value exists in the standard IANA Time Zone Database: https://www.iana.org/time-zones */
+  TimeZone: any;
   /** The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
   Timestamp: any;
   /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
@@ -187,3 +189,20 @@ export type User = {
   updatedAt: Scalars['DateTime'];
   uuid: Scalars['UUID'];
 };
+
+export type DashboardQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DashboardQuery = { __typename?: 'Query', viewer?: { __typename?: 'User', uuid: any, email: string } | null };
+
+export type AuthWithGoogleMutationVariables = Exact<{
+  code: Scalars['String'];
+}>;
+
+
+export type AuthWithGoogleMutation = { __typename?: 'Mutation', authWithGoogle?: string | null };
+
+export type GoogleAuthUrlQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GoogleAuthUrlQuery = { __typename?: 'Query', googleAuthUrl: string };

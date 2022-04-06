@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { publicClient, gql } from "@/lib/graphql";
-import { GoogleAuthUrlQuery } from "./__generated__/index.types";
+import { GoogleAuthUrlQuery } from "@/types";
 
 export async function getServerSideProps() {
   const resp = await publicClient.query<GoogleAuthUrlQuery>({
