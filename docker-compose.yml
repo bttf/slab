@@ -22,7 +22,8 @@ services:
       - ./api:/app
       - /app/node_modules
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       NODE_ENV: development
       PORT: 3000
@@ -41,5 +42,10 @@ services:
       POSTGRES_DB: some-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     ports:
       - '15432:5432'
