@@ -36,6 +36,14 @@ services:
       GOOGLE_CLIENT_ID: "$SLAB_GOOGLE_CLIENT_ID"
       GOOGLE_CLIENT_SECRET: "$SLAB_GOOGLE_CLIENT_SECRET"
       GOOGLE_CALLBACK_URL: "http://localhost:8080/google"
+  imdscraper:
+    build: imdscraper
+    command: yarn dev
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./imdscraper:/app
+      - /app/node_modules
   db:
     image: postgres:12.5-alpine
     environment:
