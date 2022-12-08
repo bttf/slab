@@ -1,8 +1,6 @@
-FROM node:14-alpine
+FROM mcr.microsoft.com/playwright:v1.27.0-focal
 
 WORKDIR /app
-
-RUN apk add --no-cache make cmake gcc g++ python3 postgresql-dev
 
 ADD package.json /app/package.json
 

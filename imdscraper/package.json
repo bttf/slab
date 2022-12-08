@@ -4,14 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --poll src/index.ts"
+    "dev": "ts-node-dev -r tsconfig-paths/register --poll index.ts"
   },
   "dependencies": {
     "express": "^4.18.2",
     "playwright": "^1.28.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.28.1",
     "@types/express": "^4.17.14",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.1.1",
+    "typescript": "^4.9.4"
   }
 }
